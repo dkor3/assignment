@@ -1,0 +1,40 @@
+
+<% if user_signed_in? %>
+     
+ 
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4"><p>
+  
+  <%= @post.title %>
+</p></h1>
+    <p class="lead"><p>
+  
+  <%= @post.content %>
+</p></p>
+  </div>
+</div>
+
+<p id="notice"><%= notice %></p>
+
+
+
+<%= link_to '수정', edit_post_path(@post),class: "btn btn-dark" %>
+
+<%= link_to '뒤로', posts_path, class: "btn btn-light" %>
+
+<%=form_for Comment.new, url:post_comments_path(@post.id) do |f|%>
+<%=f.label "댓글"%>
+<%=f.text_field :content, class: "form-control" %> <br>
+<%=f.submit '작성',class: "btn btn-dark"%>
+<% end%>
+
+<%@post.comments.each do |comment| %>
+  <%=comment.content%> <%=link_to '[이 댓글 파괘]',
+  post_comment_path(@post.id,comment.id), method: 'delete'%><br>
+<% end%>
+
+<%else%>
+ <%= link_to "Log in", new_session_path(resource_name) %>
+ <%end%>
